@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu des verbes irréguliers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e8f0fe;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 { font-size: 24px; }
+        input { font-size: 18px; padding: 5px; width: 250px; }
+        button { font-size: 18px; padding: 10px 20px; margin: 10px; cursor: pointer; }
+        #result { font-size: 18px; margin: 10px; height: 30px; }
+        #score { font-size: 20px; margin: 10px; }
+        #progres { font-size: 18px; margin: 5px; }
+        #erreurs { text-align: left; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<h1>🎯 Apprends les verbes irréguliers !</h1>
+<div id="progres"></div>
+<div id="question"></div>
+<input type="text" id="reponse" placeholder="Tape la conjugaison ici">
+<br>
+<button id="valider">Valider</button>
+<button id="skip">❓ Je ne sais pas</button>
+<button id="nouvelle">Nouvelle Partie</button>
+
+<div id="result"></div>
+<div id="score">Score : 0</div>
+<div id="erreurs"></div>
+
+<script>
+const verbes = {
+    "être": ["be", "was/were", "been"],
+    "avoir": ["have", "had", "had"],
+    "aller": ["go", "went", "gone"],
+    "faire": ["do", "did", "done"],
+    "battre": ["beat", "beat", "beaten"],
+    "devenir": ["become", "became", "become"],
+    "commencer": ["begin", "began", "begun"],
+    "casser": ["break", "broke", "broken"],
+    "apporter": ["bring", "brought", "brought"],
+    "construire": ["build", "built", "built"],
+    "acheter": ["buy", "bought", "bought"],
+    "choisir": ["choose", "chose", "chosen"],
+    "venir": ["come", "came", "come"],
+    "couper": ["cut", "cut", "cut"],
+    "dessiner": ["draw", "drew", "drawn"],
+    "boire": ["drink", "drank", "drunk"],
+    "manger": ["eat", "ate", "eaten"],
+    "tomber": ["fall", "fell", "fallen"],
+    "trouver": ["find", "found", "found"],
+    "voler (dans les airs)": ["fly", "flew", "flown"],
+    "oublier": ["forget", "forgot", "forgotten"],
+    "obtenir": ["get", "got", "got/gotten"],
+    "donner": ["give", "gave", "given"],
+    "grandir": ["grow", "grew", "grown"],
+    "entendre": ["hear", "heard", "heard"],
+    "savoir/connaître": ["know", "knew", "known"],
+    "apprendre": ["learn", "learnt/learned", "learnt/learned"],
+    "partir/quitter": ["leave", "left", "left"],
+    "perdre": ["lose", "lost", "lost"],
+    "lire": ["read", "read", "read"],
+    "courir": ["run", "ran", "run"],
+    "voir": ["see", "saw", "seen"],
+    "dire": ["say", "said", "said"],
+    "écrire": ["write", "wrote", "written"]
+};
+
+let nbQuestions = 20;
+let questions = [];
+let index = 0;
+let score = 0;
+let erreurs = [];
+
+function nouvellePartie() {
+    score = 0;
+    index = 0;
+    erreurs = [];
+    questions = Object.entries(verbes)
+        .sort(() => 0.5 - Math.random())
+        .slice(0, nbQuestions);
+    document.getElementById("score").textContent = `Score : ${score}`;
+    document.getElementById("erreurs").innerHTML = "";
+    nouvelleQuestion();
+}
+
+function nouvelleQuestion() {
+    if (index < nbQuestions) {
+        document.getElementById("question").textContent = `Traduction : ${questions[index][0]}`;
+        document.getElementById("reponse").value = "";
+        document.getElementById("result").textContent = "";
+        document.getElementById("progres").textContent = `Verbe ${index + 1} sur ${nbQuestions}`;
+    } else {
+        let msg = `🎉 Partie terminée ! Score : ${score}/${nbQuestions}`;
+        if (erreurs.length > 0) {
+            document.getElementById("erreurs").textContent = erreurs.map(e => `${e[0]} : ${e[1].join(", ")}`).join("\n");
+        }
+        alert(msg);
+    }
+}
+
+// Vérifie si au moins une des variantes de chaque forme est correcte
+function verifier() {
+    const input = document.getElementById("reponse").value.toLowerCase().trim();
+    if (input === "") return;
+
+    const [fr, reponses] = questions[index];
+
+    function correct(part) {
+        // Split sur "/" pour prendre toutes les variantes
+        const variantes = part.split("/");
+        return variantes.some(v => input.includes(v));
+    }
+
+    if (correct(reponses[0]) && correct(reponses[1]) && correct(reponses[2])) {
+        score++;
+        document.getElementById("result").textContent = "✅ Correct !";
+    } else {
+        document.getElementById("result").textContent = `❌ Faux ! Réponse : ${reponses.join(", ")}`;
+        erreurs.push([fr, reponses]);
+    }
+
+    document.getElementById("score").textContent = `Score : ${score}`;
+    index++;
+    setTimeout(nouvelleQuestion, 1200);
+}
+
+function skipQuestion() {
+    const [fr, reponses] = questions[index];
+    document.getElementById("result").textContent = `❓ Réponse : ${reponses.join(", ")}`;
+    erreurs.push([fr, reponses]); // marque comme erreur
+    index++;
+    setTimeout(nouvelleQuestion, 1200);
+}
+
+document.getElementById("valider").addEventListener("click", verifier);
+document.getElementById("skip").addEventListener("click", skipQuestion);
+document.getElementById("nouvelle").addEventListener("click", nouvellePartie);
+
+nouvellePartie();
+</script>
+
+</body>
+</html>
