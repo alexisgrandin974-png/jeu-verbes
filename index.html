@@ -17,7 +17,7 @@
         #result { font-size: 18px; margin: 10px; height: 30px; }
         #score { font-size: 20px; margin: 10px; }
         #progres { font-size: 18px; margin: 5px; }
-        #erreurs { text-align: left; margin-top: 20px; }
+        #erreurs { text-align: left; margin-top: 20px; white-space: pre-line; }
     </style>
 </head>
 <body>
@@ -87,7 +87,7 @@ function nouvellePartie() {
         .sort(() => 0.5 - Math.random())
         .slice(0, nbQuestions);
     document.getElementById("score").textContent = `Score : ${score}`;
-    document.getElementById("erreurs").innerHTML = "";
+    document.getElementById("erreurs").textContent = "";
     nouvelleQuestion();
 }
 
@@ -100,7 +100,8 @@ function nouvelleQuestion() {
     } else {
         let msg = `🎉 Partie terminée ! Score : ${score}/${nbQuestions}`;
         if (erreurs.length > 0) {
-            document.getElementById("erreurs").textContent = erreurs.map(e => `${e[0]} : ${e[1].join(", ")}`).join("\n");
+            document.getElementById("erreurs").textContent = "Verbes à revoir :\n" +
+                erreurs.map(e => `${e[0]} : ${e[1].join(", ")}`).join("\n");
         }
         alert(msg);
     }
@@ -114,7 +115,6 @@ function verifier() {
     const [fr, reponses] = questions[index];
 
     function correct(part) {
-        // Split sur "/" pour prendre toutes les variantes
         const variantes = part.split("/");
         return variantes.some(v => input.includes(v));
     }
@@ -129,15 +129,16 @@ function verifier() {
 
     document.getElementById("score").textContent = `Score : ${score}`;
     index++;
-    setTimeout(nouvelleQuestion, 1200);
+    // Augmente le temps pour voir la bonne réponse
+    setTimeout(nouvelleQuestion, 2500); // 2,5 secondes
 }
 
 function skipQuestion() {
     const [fr, reponses] = questions[index];
     document.getElementById("result").textContent = `❓ Réponse : ${reponses.join(", ")}`;
-    erreurs.push([fr, reponses]); // marque comme erreur
+    erreurs.push([fr, reponses]);
     index++;
-    setTimeout(nouvelleQuestion, 1200);
+    setTimeout(nouvelleQuestion, 2500); // 2,5 secondes
 }
 
 document.getElementById("valider").addEventListener("click", verifier);
