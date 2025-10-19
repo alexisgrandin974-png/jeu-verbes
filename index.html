@@ -1,24 +1,19 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeu des verbes irréguliers</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #e8f0fe;
-            text-align: center;
-            padding: 20px;
-        }
-        h1 { font-size: 24px; }
-        input { font-size: 18px; padding: 5px; width: 250px; }
-        button { font-size: 18px; padding: 10px 20px; margin: 10px; cursor: pointer; }
-        #result { font-size: 18px; margin: 10px; height: 30px; }
-        #score { font-size: 20px; margin: 10px; }
-        #progres { font-size: 18px; margin: 5px; }
-        #erreurs { text-align: left; margin-top: 20px; white-space: pre-line; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jeu des verbes irréguliers</title>
+<style>
+body { font-family: Arial, sans-serif; background-color: #e8f0fe; text-align: center; padding: 20px; }
+h1 { font-size: 24px; }
+input { font-size: 18px; padding: 5px; width: 250px; }
+button { font-size: 18px; padding: 10px 20px; margin: 10px; cursor: pointer; }
+#result { font-size: 18px; margin: 10px; height: 30px; }
+#score { font-size: 20px; margin: 10px; }
+#progres { font-size: 18px; margin: 5px; }
+#erreurs { text-align: left; margin-top: 20px; white-space: pre-line; }
+</style>
 </head>
 <body>
 
@@ -37,40 +32,145 @@
 
 <script>
 const verbes = {
-    "être": ["be", "was/were", "been"],
-    "avoir": ["have", "had", "had"],
-    "aller": ["go", "went", "gone"],
-    "faire": ["do", "did", "done"],
-    "battre": ["beat", "beat", "beaten"],
-    "devenir": ["become", "became", "become"],
-    "commencer": ["begin", "began", "begun"],
-    "casser": ["break", "broke", "broken"],
-    "apporter": ["bring", "brought", "brought"],
-    "construire": ["build", "built", "built"],
-    "acheter": ["buy", "bought", "bought"],
-    "choisir": ["choose", "chose", "chosen"],
-    "venir": ["come", "came", "come"],
-    "couper": ["cut", "cut", "cut"],
-    "dessiner": ["draw", "drew", "drawn"],
-    "boire": ["drink", "drank", "drunk"],
-    "manger": ["eat", "ate", "eaten"],
-    "tomber": ["fall", "fell", "fallen"],
-    "trouver": ["find", "found", "found"],
-    "voler (dans les airs)": ["fly", "flew", "flown"],
-    "oublier": ["forget", "forgot", "forgotten"],
-    "obtenir": ["get", "got", "got/gotten"],
-    "donner": ["give", "gave", "given"],
-    "grandir": ["grow", "grew", "grown"],
-    "entendre": ["hear", "heard", "heard"],
-    "savoir/connaître": ["know", "knew", "known"],
-    "apprendre": ["learn", "learnt/learned", "learnt/learned"],
-    "partir/quitter": ["leave", "left", "left"],
-    "perdre": ["lose", "lost", "lost"],
-    "lire": ["read", "read", "read"],
-    "courir": ["run", "ran", "run"],
-    "voir": ["see", "saw", "seen"],
-    "dire": ["say", "said", "said"],
-    "écrire": ["write", "wrote", "written"]
+    // Partie 1 : 3 formes identiques
+    "parier": ["bet","bet","bet"],
+    "éclater": ["burst","burst","burst"],
+    "jeter": ["cast","cast","cast"],
+    "coûter": ["cost","cost","cost"],
+    "couper": ["cut","cut","cut"],
+    "frapper": ["hit","hit","hit"],
+    "faire mal": ["hurt","hurt","hurt"],
+    "laisser": ["let","let","let"],
+    "louer": ["let","let","let"],
+    "mettre": ["put","put","put"],
+    "poser": ["put","put","put"],
+    "lire": ["read","read","read"],
+    "fermer": ["shut","shut","shut"],
+
+    // Partie 2 : prétérit et participe passé identiques
+    "secourber": ["help","helped","helped"],
+    "apporter": ["bring","brought","brought"],
+    "construire": ["build","built","built"],
+    "brûler": ["burn","burnt","burnt"],
+    "acheter": ["buy","bought","bought"],
+    "attraper": ["catch","caught","caught"],
+    "ramper": ["creep","crept","crept"],
+    "distribuer": ["deal","dealt","dealt"],
+    "creuser": ["dig","dug","dug"],
+    "rêver": ["dream","dreamt","dreamt"],
+    "nourrir": ["feed","fed","fed"],
+    "sentir": ["feel","felt","felt"],
+    "éprouver": ["feel","felt","felt"],
+    "combattre": ["fight","fought","fought"],
+    "trouver": ["find","found","found"],
+    "fuir": ["flee","fled","fled"],
+    "pronostiquer": ["forecast","forecast","forecast"],
+    "obtenir": ["get","got","gotten"],
+    "avoir": ["have","had","had"],
+    "entendre": ["hear","heard","heard"],
+    "tenir": ["hold","held","held"],
+    "garder": ["keep","kept","kept"],
+    "étendre": ["lay","laid","laid"],
+    "conduire": ["lead","led","led"],
+    "apprendre": ["learn","learnt","learnt"],
+    "quitter": ["leave","left","left"],
+    "prêter": ["lend","lent","lent"],
+    "allumer": ["light","lit","lit"],
+    "éclairer": ["light","lit","lit"],
+    "perdre": ["lose","lost","lost"],
+    "faire": ["make","made","made"],
+    "signifier": ["mean","meant","meant"],
+    "rencontrer": ["meet","met","met"],
+    "payer": ["pay","paid","paid"],
+    "dire": ["say","said","said"],
+    "vendre": ["sell","sold","sold"],
+    "envoyer": ["send","sent","sent"],
+    "briller": ["shine","shone","shone"],
+    "tirer": ["shoot","shot","shot"],
+    "être assis": ["sit","sat","sat"],
+    "dormir": ["sleep","slept","slept"],
+    "glisser": ["slide","slid","slid"],
+    "sentir (odeur)": ["smell","smelt","smelt"],
+    "épeuler": ["spoil","spoilt","spoilt"],
+    "dépenser": ["spend","spent","spent"],
+    "cracher": ["spit","spat","spat"],
+    "être debout": ["stand","stood","stood"],
+    "coller": ["stick","stuck","stuck"],
+    "piquer": ["sting","stung","stung"],
+    "balayer": ["sweep","swept","swept"],
+    "se balancer": ["swing","swung","swung"],
+    "enseigner": ["teach","taught","taught"],
+    "raconter": ["tell","told","told"],
+    "penser": ["think","thought","thought"],
+    "comprendre": ["understand","understood","understood"],
+    "pleurer": ["weep","wept","wept"],
+    "gagner": ["win","won","won"],
+
+    // Partie 3 : deux formes identiques (base + participe passé)
+    "battre": ["beat","beat","beaten"],
+    "devenir": ["become","became","become"],
+    "venir": ["come","came","come"],
+    "surmonter": ["overcome","overcame","overcome"],
+    "courir": ["run","ran","run"],
+
+    // Partie 4 : toutes formes différentes
+    "se lever": ["rise","rose","risen"],
+    "se réveiller": ["wake","woke","woken"],
+    "être": ["be","was/were","been"],
+    "supporter": ["bear","bore","born"],
+    "commencer": ["begin","began","begun"],
+    "mordre": ["bite","bit","bitten"],
+    "souffler": ["blow","blew","blown"],
+    "casser": ["break","broke","broken"],
+    "choisir": ["choose","chose","chosen"],
+    "faire": ["do","did","done"],
+    "dessiner": ["draw","drew","drawn"],
+    "pouvoir": ["can","could","been able"],
+    "conduire": ["drive","drove","driven"],
+    "manger": ["eat","ate","eaten"],
+    "tomber": ["fall","fell","fallen"],
+    "voler (dans les airs)": ["fly","flew","flown"],
+    "interdire": ["forbid","forbade","forbidden"],
+    "prévoir": ["forecast","forecasted","forecasted"],
+    "oublier": ["forget","forgot","forgotten"],
+    "pardonner": ["forgive","forgave","forgiven"],
+    "geler": ["freeze","froze","frozen"],
+    "donner": ["give","gave","given"],
+    "aller": ["go","went","gone"],
+    "croître": ["grow","grew","grown"],
+    "cacher": ["hide","hid","hidden"],
+    "connaître": ["know","knew","known"],
+    "être allongé": ["lie","lay","lain"],
+    "se méprendre": ["mistake","mistook","mistaken"],
+    "faucher": ["mow","mowed","mown"],
+    "devenir trop grand": ["overgrow","overgrew","overgrown"],
+    "exagérer": ["overdo","overdid","overdone"],
+    "superviser": ["oversee","oversaw","overseen"],
+    "dépasser": ["overtake","overtook","overtaken"],
+    "aller à cheval": ["ride","rode","ridden"],
+    "à bicyclette": ["ride","rode","ridden"],
+    "voir": ["see","saw","seen"],
+    "secouer": ["shake","shook","shaken"],
+    "montrer": ["show","showed","shown"],
+    "rétrécir": ["shrink","shrank","shrunk"],
+    "chanter": ["sing","sang","sung"],
+    "s'enfoncer": ["sink","sank","sunk"],
+    "couler": ["sink","sank","sunk"],
+    "parler": ["speak","spoke","spoken"],
+    "sauter": ["spring","sprang","sprung"],
+    "jaillir": ["spring","sprang","sprung"],
+    "voler": ["steal","stole","stolen"],
+    "dérober": ["steal","stole","stolen"],
+    "jurer": ["swear","swore","sworn"],
+    "nager": ["swim","swam","swum"],
+    "prendre": ["take","took","taken"],
+    "déchirer": ["tear","tore","torn"],
+    "prospérer": ["thrive","throve","thrived"],
+    "subir": ["undergo","underwent","undergone"],
+    "entreprendre": ["undertake","undertook","undertaken"],
+    "s'éveiller": ["wake","woke","woken"],
+    "porter un vêtement": ["wear","wore","worn"],
+    "écrire": ["write","wrote","written"]
 };
 
 let nbQuestions = 20;
@@ -86,67 +186,5 @@ function nouvellePartie() {
     questions = Object.entries(verbes)
         .sort(() => 0.5 - Math.random())
         .slice(0, nbQuestions);
-    document.getElementById("score").textContent = `Score : ${score}`;
-    document.getElementById("erreurs").textContent = "";
-    nouvelleQuestion();
-}
+    document.getElementById("score").textContent = `Score
 
-function nouvelleQuestion() {
-    if (index < nbQuestions) {
-        document.getElementById("question").textContent = `Traduction : ${questions[index][0]}`;
-        document.getElementById("reponse").value = "";
-        document.getElementById("result").textContent = "";
-        document.getElementById("progres").textContent = `Verbe ${index + 1} sur ${nbQuestions}`;
-    } else {
-        let msg = `🎉 Partie terminée ! Score : ${score}/${nbQuestions}`;
-        if (erreurs.length > 0) {
-            document.getElementById("erreurs").textContent = "Verbes à revoir :\n" +
-                erreurs.map(e => `${e[0]} : ${e[1].join(", ")}`).join("\n");
-        }
-        alert(msg);
-    }
-}
-
-// Vérifie si au moins une des variantes de chaque forme est correcte
-function verifier() {
-    const input = document.getElementById("reponse").value.toLowerCase().trim();
-    if (input === "") return;
-
-    const [fr, reponses] = questions[index];
-
-    function correct(part) {
-        const variantes = part.split("/");
-        return variantes.some(v => input.includes(v));
-    }
-
-    if (correct(reponses[0]) && correct(reponses[1]) && correct(reponses[2])) {
-        score++;
-        document.getElementById("result").textContent = "✅ Correct !";
-    } else {
-        document.getElementById("result").textContent = `❌ Faux ! Réponse : ${reponses.join(", ")}`;
-        erreurs.push([fr, reponses]);
-    }
-
-    document.getElementById("score").textContent = `Score : ${score}`;
-    index++;
-    // Augmente le temps pour voir la bonne réponse
-    setTimeout(nouvelleQuestion, 2500); // 2,5 secondes
-}
-
-function skipQuestion() {
-    const [fr, reponses] = questions[index];
-    document.getElementById("result").textContent = `❓ Réponse : ${reponses.join(", ")}`;
-    erreurs.push([fr, reponses]);
-    index++;
-    setTimeout(nouvelleQuestion, 2500); // 2,5 secondes
-}
-
-document.getElementById("valider").addEventListener("click", verifier);
-document.getElementById("skip").addEventListener("click", skipQuestion);
-document.getElementById("nouvelle").addEventListener("click", nouvellePartie);
-
-nouvellePartie();
-</script>
-
-</body>
-</html>
